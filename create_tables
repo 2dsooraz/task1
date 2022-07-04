@@ -1,0 +1,45 @@
+/*Checked on Azure SQL database(Student account(2dsooraz@gmail.com)) 
+A database named "Organization" was created 
+and connected with server name:"trail1.database.windows.net"*/
+
+
+/* Creating parentDepartment table */
+CREATE TABLE ParentDepartment
+(
+    ParentDeptID int NOT NULL PRIMARY KEY UNIQUE,
+    ParentDeptName varchar(255),
+    created_on DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+/*creating manager table */
+CREATE TABLE Manager
+(
+    ManagerID int NOT NULL PRIMARY KEY UNIQUE,
+    ManagerName varchar(255),
+    created_on DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+/*Creating Department table */
+CREATE TABLE Department
+(
+    DeptID int NOT NULL PRIMARY KEY UNIQUE,
+    DeptName varchar(255) NOT NULL,
+    DeptCode VARCHAR(255),
+    ParentDeptID int NOT NULL FOREIGN KEY REFERENCES ParentDepartment(ParentDeptID),
+    Descriptions TEXT, 
+    Active BOOLEAN NOT NULL,  
+    ManagerID int FOREIGN KEY REFERENCES Manager(ManagerID),
+    CONSTRAINT ManagerID UNIQUE (ManagerID) 
+);
+
+/*creating Employee table */
+CREATE TABLE Employee
+(
+    EmployeeID int NOT NULL PRIMARY KEY UNIQUE,
+    FirstName varchar(255) NOT NULL,
+    MiddleName VARCHAR(255),
+    LastName VARCHAR(255),
+    joinDate DATETIME DEFAULT CURRENT_TIMESTAMP,
+    MonthlySalary DECIMAL(10,5) NOT NULL,
+    DeptID int NOT NULL FOREIGN KEY REFERENCES Department(DeptID)
+);

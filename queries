@@ -1,0 +1,25 @@
+------Query 1 ----
+
+SELECT DeptName, FLOOR(MONTHS_BETWEEN(CURRENT_TIMESTAMP,Employee.joinDate)) AS WorkedMonths,
+(WorkedMonths*MonthlySalary) AS TotalEarning FROM Department,Employee
+GROUP BY (SELECT DepartmentName 
+			FROM Department 
+				WHERE DeptID IN 
+        (SELECT DeptID 
+			FROM Employee));
+
+------QUERY 2 -------
+SELECT * FROM Employee WHERE
+    ( SELECT DeptName FROM table_name)="Sale"
+    AND EXTRACT(MONTH
+              FROM age(CURRENT_DATE, joinDate)) > 6; 
+              
+------Query 3--------
+SELECT  ManagerName
+	FROM Manager 
+		WHERE ManagerID IN 
+		(SELECT ManagerID,DepartmentName 
+			FROM Department 
+				WHERE DeptID IN 
+        (SELECT DeptID 
+			FROM Employee));
